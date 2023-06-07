@@ -1,4 +1,4 @@
-const { User, UserData, } = require("../models/index")
+const { User, UserData, RgData, TitleData, Address } = require("../models/index")
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
@@ -57,7 +57,7 @@ class UserController {
     //     }
     // }
     create = async (req, res) => {
-        const { userData, personalData } = req.body;
+        const { userData, personalData, address, rgData, titleData } = req.body;
 
         const salt = await bcrypt.genSalt(10)
         const hashPass = await bcrypt.hash(userData.password, salt)
@@ -65,11 +65,22 @@ class UserController {
 
         try {
 
-            // const user = await UserData.create(personalData)
+            const userDatas = await UserData.create(personalData)
 
-            const responseUser = await User.create(newUser)
+            const rgUser = await RgData.create(rgData)
+            await userDatas.setRgUser(rgUser);
 
-            res.status(200).send(responseUser)
+            const titleUser = await TitleData.create(titleData)
+            await userDatas.setTitleUser(titleUser);
+
+            const Address = await Address.create(address)
+            await userDatas.setAddress(Address);
+
+            const userCreated = await User.create(newUser)
+            await userDatas.setUserCreated(userCreated);
+
+
+            res.status(200).send({ msg: 'Erro ao cadastrar usuario:', userCreated })
         } catch (error) {
             res.status(500).send({ msg: 'Erro ao cadastrar usuario:', error })
         }

@@ -9,9 +9,14 @@ class RgData extends Model {
             uf: DataTypes.STRING,
             createdAt: DataTypes.DATE,
             updatedAt: DataTypes.DATE,
-        }), {
-            sequelize
-        }
+        },
+            {
+                sequelize
+            }
+        );
+    }
+    static associate(models) {
+        this.belongsTo(models.UserData, { foreignKey: 'user_data_id', as: 'userData' })
     }
 }
 

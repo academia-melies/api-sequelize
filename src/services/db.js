@@ -15,6 +15,10 @@ TitleData.init(connection);
 // Association
 User.associate(connection.models);
 UserData.associate(connection.models);
+Address.associate(connection.models);
+RgData.associate(connection.models);
+TitleData.associate(connection.models);
+
 
 
 
