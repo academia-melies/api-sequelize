@@ -20,4 +20,4 @@ class TitleData extends Model {
     }
 }
 
-module.exports = TitleData
+module.exports = TitleData;

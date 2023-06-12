@@ -13,15 +13,14 @@ class User extends Model {
             photo: DataTypes.STRING,
             createdAt: DataTypes.DATE,
             updatedAt: DataTypes.DATE,
-        },
-            {
-                sequelize
-            }
-        );
+        }, {
+            sequelize,
+            modelName: 'users'
+        });
     }
 
     static associate(models) {
-        this.hasOne(models.UserData, { foreignKey: 'user_data_id', as: 'userData' })
+        this.belongsTo(models.UserData, { foreignKey: 'id', as: 'userData' })
     }
 }
 

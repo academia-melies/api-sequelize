@@ -24,16 +24,13 @@ class UserData extends Model {
             },
             {
                 sequelize,
-                modelName: 'UserData'
+                modelName: 'userData'
             }
         );
     }
     static associate(models) {
-        this.belongsTo(models.User, { foreignKey: 'id', as: 'user' })
-        this.hasOne(models.RgUser, { foreignKey: 'user_data_id', as: 'rgData' })
-        this.hasOne(models.TitleUser, { foreignKey: 'user_data_id', as: 'titleUser' })
-        this.hasOne(models.Address, { foreignKey: 'user_data_id', as: 'address' })
+        this.belongsTo(models.User, { foreignKey: 'userId', as: 'user' })
     }
 }
 
-module.exports = UserData
+module.exports = UserData;

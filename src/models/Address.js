@@ -23,4 +23,4 @@ class Address extends Model {
 
 }
 
-module.exports = Address
+module.exports = Address;

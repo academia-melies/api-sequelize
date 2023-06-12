@@ -1,13 +1,23 @@
-const { User, UserData, RgData, TitleData, Address } = require("../models/index")
+const User = require("../models/User")
+const UserData = require("../models/UserData")
+const RgData = require("../models/RgData")
+const TitleData = require("../models/TitleData")
+const Address = require("../models/Address")
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const connection = require("../services/db")
 
 class UserController {
 
-    // list = async (req, res) => {
-    //     const users = await UserModel.list();
-    //     res.status(200).json(users);
-    // }
+    list = async (req, res) => {
+        try {
+            
+            const users = await User.findAll();
+            res.status(200).json(users);
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     // readById = async (req, res) => {
     //     try {
@@ -65,20 +75,11 @@ class UserController {
 
         try {
 
-            const userDatas = await UserData.create(personalData)
-
-            const rgUser = await RgData.create(rgData)
-            await userDatas.setRgUser(rgUser);
-
-            const titleUser = await TitleData.create(titleData)
-            await userDatas.setTitleUser(titleUser);
-
-            const Address = await Address.create(address)
-            await userDatas.setAddress(Address);
-
-            const userCreated = await User.create(newUser)
-            await userDatas.setUserCreated(userCreated);
-
+            const user = await UserData.create(personalData)
+            await RgData.create({ ...rgData, user_data_id: user.id })
+            await TitleData.create({ ...titleData, user_data_id: user.id })
+            await Address.create({ ...address, user_data_id: user.id })
+            const userCreated = await User.create({ ...newUser, user_data_id: user.id })
 
             res.status(200).send({ msg: 'Erro ao cadastrar usuario:', userCreated })
         } catch (error) {

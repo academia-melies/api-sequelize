@@ -1,8 +1,8 @@
-const User = require('../models/User')
-const UserData = require('../models/UserData')
-const Address = require('../models/Address')
-const RgData = require('../models/RgData')
-const TitleData = require('../models/TitleData')
+const User = require('./User')
+const UserData = require('./UserData')
+const Address = require('./Address')
+const RgData = require('./RgData')
+const TitleData = require('./TitleData')
 
 
 module.exports = {

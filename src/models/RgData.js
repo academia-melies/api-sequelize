@@ -20,4 +20,4 @@ class RgData extends Model {
     }
 }
 
-module.exports = RgData
+module.exports = RgData;

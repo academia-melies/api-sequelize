@@ -1,9 +1,13 @@
 const Sequelize = require("sequelize")
 const dbConfig = require('../config/dataBase');
-const { User, UserData, Address, RgData, TitleData } = require("../models");
-
+const User = require('../models/User')
+const UserData = require('../models/UserData')
+const Address = require('../models/Address')
+const RgData = require('../models/RgData')
+const TitleData = require('../models/TitleData')
 
 const connection = new Sequelize(dbConfig)
+connection.authenticate().then(()=>{ console.log('foi')}).catch((error) => {console.log('foi nao')})
 
 // Connections
 User.init(connection);
